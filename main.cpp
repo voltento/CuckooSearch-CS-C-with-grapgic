@@ -9,6 +9,7 @@
 #define NoB 3
 #define ITER 100000
 #define PA 0.003
+#define MAX_ITER_WITH_EQUAL_Y 100
 
 double func(double v)
 {
@@ -36,6 +37,8 @@ int main(int argc, char *argv[])
     QPoint salution;
 
     int iter = 0;
+    int countLoop = 0;
+    double lastFitness;
     while(++iter < ITER)
     {
         QPoint bestPoint = baskets.getBest();
@@ -43,11 +46,18 @@ int main(int argc, char *argv[])
 
         baskets.printEggs();
         double fitnes = func(baskets.solutions[bestPoint.rx()][bestPoint.ry()]);
+        if(fitnes == lastFitness)
+            countLoop ++;
+        else
+        {
+            countLoop = 0;
+            lastFitness = fitnes;
+        }
         w.addData(fitnes);
         qDebug() <<  "Best x =   "<< baskets.solutions[bestPoint.rx()][bestPoint.ry()];
         qDebug() <<  " with y = " << fitnes ;
 
-        if( fabs(fitnes) < PA)
+        if( fabs(fitnes) < PA || countLoop >= MAX_ITER_WITH_EQUAL_Y)
         {
             salution = bestPoint;
             break;
