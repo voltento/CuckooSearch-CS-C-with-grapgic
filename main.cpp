@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
         baskets.printEggs();
         double fitnes = func(baskets.solutions[bestPoint.rx()][bestPoint.ry()]);
         if(fitnes == lastFitness)
-            countLoop ++;
+            countLoop++;
         else
         {
             countLoop = 0;
@@ -96,9 +96,6 @@ int main(int argc, char *argv[])
 
     w.show();
     w.showGraph();
-
-    int gag = rand();
-    gag ++;
 
     return a.exec();
 }
